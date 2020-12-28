@@ -2,6 +2,8 @@ using System;
 using System.IO.Compression;
 using System.Security.Cryptography;
 using System.Text;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -25,6 +27,21 @@ using Huby.Data;
 
 namespace Huby
 {
+    public sealed class DateTimeConverter : JsonConverter<DateTime>
+    {
+        public string Format { get; set; } = "r";
+
+        public override DateTime Read(ref Utf8JsonReader r, Type t, JsonSerializerOptions opt)
+        {
+            return DateTime.Parse(r.GetString());
+        }
+
+        public override void Write(Utf8JsonWriter w, DateTime dt, JsonSerializerOptions opt)
+        {
+            w.WriteStringValue(dt.ToString(Format));
+        }
+    }
+
     public class Startup
     {
         public IConfiguration Configuration { get; }
@@ -40,6 +57,7 @@ namespace Huby
         {
             services.AddControllers().AddJsonOptions(opt => {
                 opt.JsonSerializerOptions.PropertyNameCaseInsensitive = true;
+                opt.JsonSerializerOptions.Converters.Add(new DateTimeConverter());
             });
 
             services.AddDbContext<ApplicationDatabase>(builder => {

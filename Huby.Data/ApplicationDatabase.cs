@@ -31,7 +31,7 @@ namespace Huby.Data
 
             foreach (var entry in entries)
             {
-                entry.Entity.LastModified = DateTime.Now;
+                entry.Entity.LastModified = DateTime.UtcNow;
             }
 
             return base.SaveChanges();

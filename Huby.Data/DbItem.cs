@@ -16,10 +16,10 @@ namespace Huby.Data
         public string Id { get; set; }
 
         [Required]
-        public DateTime CreatedAt { get; set; } = DateTime.Now;
+        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
         [Required]
-        public DateTime LastModified { get; set; } = DateTime.Now;
+        public DateTime LastModified { get; set; } = DateTime.UtcNow;
 
         public static string GenerateID()
         {
