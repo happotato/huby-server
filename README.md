@@ -4,7 +4,8 @@ Back-end code to the open source social app.
 
 ## Dependencies
 
-- [.NET CORE 3.1](https://dotnet.microsoft.com/download/dotnet-core/3.1)
+- [.NET 5.0](https://dotnet.microsoft.com/download/dotnet/5.0)
+- [PostgreSQL](https://www.postgresql.org/)
 
 ## Environment
 
