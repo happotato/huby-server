@@ -15,12 +15,14 @@ namespace Huby.Controllers
     {
         private ILogger<S3Controller> Logger { get; }
         private AmazonS3Client S3Client      { get; }
+        private Protocol Protocol            { get; }
         private string ImageBucketName       { get; }
 
         public S3Controller(IConfiguration configuration, ILogger<S3Controller> logger, AmazonS3Client s3)
         {
             Logger = logger;
             S3Client = s3;
+            Protocol = s3.Config.UseHttp ? Protocol.HTTP : Protocol.HTTPS;
             ImageBucketName = configuration["S3:ImageBucketName"];
         }
 
@@ -61,6 +63,7 @@ namespace Huby.Controllers
                 Key         = key,
                 Verb        = HttpVerb.PUT,
                 Expires     = DateTime.UtcNow.AddMinutes(5),
+                Protocol    = Protocol,
                 ContentType = format
             });
 
@@ -80,6 +83,7 @@ namespace Huby.Controllers
                 Key         = key,
                 Verb        = HttpVerb.GET,
                 Expires     = DateTime.UtcNow.AddMinutes(5),
+                Protocol    = Protocol,
             });
 
             return Redirect(url);
