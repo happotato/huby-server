@@ -23,13 +23,13 @@ dotnet restore
 
 You may need to create the `appsettings.json` or `appsettings.Development.json` file at [Huby](Huby).
 
-### Databse
+### Database
 
 ```bash
 # Install tools
 dotnet tool install --global dotnet-ef 
 
-# Update databse
+# Update database
 dotnet ef database update
 ```
 
